@@ -17,7 +17,7 @@
 
                     <head>
                         <meta charset="UTF-8" />
-                        <title>Craig Burke - Candy - Create New Candy</title>
+                        <title>Craig Burke - Candy - Create New Owner</title>
                         <!-- Bootstrap -->
                         <!-- CSS only -->
                         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -70,7 +70,7 @@
                         <div class="container text-center mt-5">
 
                             <div>
-                                <h1 class="bg-primary text-light ps-5">Create a new Candy</h1>
+                                <h1 class="bg-primary text-light ps-5">Create a new Owner</h1>
                             </div>
 
                             <p class="w-100"></p>
@@ -78,82 +78,32 @@
                             <!-- New Candy Form START -->
                             <div
                                 class="container bg-secondary text-light rounded-3 w-50 mt-5 border border-info border-5 pb-5 p-3">
-                                <form:form action="/candy/newCandy" method="post" modelAttribute="candy">
-                                    <!-- <input type="hidden" name="_method" value="post" /> -->
-
-
-                                    <div class="mb-3">
-                                        <p>
-                                            <form:label path="name" class="float-start">Name</form:label>
-                                            <form:errors path="name" class="text-danger h5" />
-                                            <form:input path="name" class="form-control text-dark" placeholder="name" />
-                                        </p>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <p>
-                                            <form:label path="brand" class="float-start">Brand</form:label>
-                                            <form:errors path="brand" class="text-danger h5" />
-                                            <form:input path="brand" class="form-control" placeholder="brand" />
-                                        </p>
-                                    </div>
+                                <form:form action="/candy/newOwner" method="post" modelAttribute="owner">
 
 
 
                                     <div class="mb-3">
                                         <p>
-                                            <form:label path="rating" class="float-start me-2">Rating:</form:label>
-                                            <form:errors path="rating" class="text-danger h5" />
-                                            <form:select path="rating" class="float-start">
-                                                <form:option value="1" aria-selected="true">1</form:option>
-                                                <form:option value="2">2</form:option>
-                                                <form:option value="3">3</form:option>
-                                                <form:option value="4">4</form:option>
-                                                <form:option value="5">5</form:option>
-                                                <form:option value="6">6</form:option>
-                                                <form:option value="7">7</form:option>
-                                                <form:option value="8">8</form:option>
-                                                <form:option value="9">9</form:option>
-                                                <form:option value="10">10</form:option>
-                                            </form:select>
+                                            <form:label path="firstName" class="float-start">First Name</form:label>
+                                            <form:errors path="firstName" class="text-danger h5" />
+                                            <form:input path="firstName" class="form-control text-dark"
+                                                placeholder="firstName" />
                                         </p>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <p>
+                                            <form:label path="lastName" class="float-start">Last Name</form:label>
+                                            <form:errors path="lastName" class="text-danger h5" />
+                                            <form:input path="lastName" class="form-control text-dark"
+                                                placeholder="lastName" />
+                                        </p>
+                                    </div>
+
                                     <br>
                                     <br>
 
-
-                                    <div class="mb-3">
-                                        <p>
-                                            <form:label path="price" class="float-start">Price:</form:label>
-                                            <form:errors path="price" class="text-danger h5" />
-                                            <br>
-                                            <form:input type="number" step="0.01" path="price" class="form-control w-25"
-                                                placeholder="price" />
-                                        </p>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <p>
-                                            <form:label path="owner" class="float-start me-2">Owner:</form:label>
-                                            <form:errors path="owner" class="text-danger h5" />
-                                            <form:select path="owner" class="float-start">
-
-                                                <!-- for each owner in owners -->
-                                                <c:forEach items="${allOwners}" var="owner">
-                                                    <form:option value="${owner.id}"
-                                                        label="${owner.firstName} ${owner.lastName}">
-                                                    </form:option> <!-- end of for each -->
-                                                </c:forEach>
-
-                                            </form:select>
-                                        </p>
-                                    </div>
-                                    <br>
-
-
-                                    <p class="w-100"></p>
-
-                                    <input type="submit" value="Add New Candy" class="btn btn-warning float-start" />
+                                    <input type="submit" value="Add New Owner" class="btn btn-warning float-start" />
                                     <!-- == Cancel button == -->
                                     <p class="w-100"></p>
                                     <a class="btn btn-info float-end mb-3" href="/candy/dashboard">Cancel</a>

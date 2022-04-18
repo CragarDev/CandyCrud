@@ -95,6 +95,14 @@
                                 </ul>
 
                                 <ul class="list-inline">
+                                    <li class="list-inline-item">Owner:</li>
+                                    <li class="list-inline-item fs-3 text-info">
+                                        <c:out value="${candy.owner.firstName} ${candy.owner.lastName}">
+                                        </c:out>
+                                    </li>
+                                </ul>
+
+                                <ul class="list-inline">
                                     <li class="list-inline-item">Rating (1-10):</li>
                                     <li class="list-inline-item fs-3 text-warning">
                                         <c:out value="${candy.rating}"></c:out>

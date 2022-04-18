@@ -1,5 +1,7 @@
 package com.cragardev.candycrud.controllers;
 
+
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cragardev.candycrud.models.Candy;
+import com.cragardev.candycrud.models.Owner;
 import com.cragardev.candycrud.services.CandyService;
+import com.cragardev.candycrud.services.OwnerService;
 
 @Controller
 public class HomeController {
@@ -21,11 +25,14 @@ public class HomeController {
 	
 	// Inject the Service
 	private final CandyService candyService;
+	private final OwnerService ownerService;
+	
 	
 
-	 public HomeController(CandyService candyService) {
+	 public HomeController(CandyService candyService, OwnerService ownerService) {
 		super();
 		this.candyService = candyService;
+		this.ownerService = ownerService;
 	}
 
 	 
@@ -49,13 +56,16 @@ public class HomeController {
 
     //
     // ========= Candy Dashboard page ===========
-    // To show all candies
+    // To show all candies and all owners
     //
     @GetMapping("/candy/dashboard")
     public String dashboard(Model model) {
     	
     	// Send all our candies to the JSP using Model model
     	model.addAttribute("candies", candyService.allCandys());
+    	
+    	// Send all our owners to the JSP using Model model
+    	model.addAttribute("owners", ownerService.allOwners());
 
         return "dashboard.jsp";
     }
@@ -72,6 +82,19 @@ public class HomeController {
 
         return "showOneCandy.jsp";
     }
+    
+    //
+    // ========= Show One Owner page ===========
+    //
+    @GetMapping("/candy/showOneOwner/{id}") // add an Id
+    public String showOneOwner(Model model,
+    		@PathVariable(value="id") Long id) {
+    	
+    	Owner owner = ownerService.findOwner(id);
+    	model.addAttribute("owner", owner);
+    	
+    	return "showOneOwner.jsp";
+    }
 
     // ---------------------------------------- CREATE NEW CANDY-----------
     //
@@ -79,8 +102,10 @@ public class HomeController {
     //
     @GetMapping("/candy/newCandy")
     public String newCandy(
-    		@ModelAttribute("candy") Candy candy) {
+    		@ModelAttribute("candy") Candy candy,
+    		Model model) {
     	
+    	model.addAttribute("allOwners", ownerService.allOwners());
     	
         return "newCandy.jsp";
     }
@@ -97,6 +122,7 @@ public class HomeController {
     	
     	if(result.hasErrors()) {
     		model.addAttribute("candy", candy);
+    		model.addAttribute("allOwners", ownerService.allOwners());
     		return "newCandy.jsp";
     	} else {
     		candyService.createCandy(candy);
@@ -113,7 +139,7 @@ public class HomeController {
     public String updateCandy(@PathVariable("id") Long id,
     		@ModelAttribute("candy") Candy candy,
     		Model model) {
-    	
+    	model.addAttribute("allOwners", ownerService.allOwners());
     	model.addAttribute("candy", candyService.findCandy(id));
     	
         return "updateCandy.jsp";
@@ -126,9 +152,11 @@ public class HomeController {
     public String updateCandy(
     		@Valid
     		@ModelAttribute("candy") Candy candy,
-    		BindingResult result) {
+    		BindingResult result,
+    		Model model) {
     	
     	if (result.hasErrors()) {
+    		model.addAttribute("allOwners", ownerService.allOwners());
     		return "updateCandy.jsp";
     	} else {
     		
@@ -137,6 +165,40 @@ public class HomeController {
     	}
     	
     }
+    
+
+    // ---------------------------------------- CREATE NEW OWNER-----------
+    //
+    // ========= Create New Owner page ===========
+    //
+    @GetMapping("/candy/newOwner")
+    public String newOwner(
+    		@ModelAttribute("owner") Owner owner) {
+    	
+    	
+        return "newOwner.jsp";
+    }
+
+    //
+    // ========= Create Owner PROCESS ===========
+    //
+    @PostMapping("/candy/newOwner")
+    public String newOwnerProcess(
+    		@Valid
+    		@ModelAttribute("owner") Owner owner,
+    		BindingResult result,
+    		Model model) {
+    	
+    	if(result.hasErrors()) {
+    		model.addAttribute("owner", owner);
+    		return "newOwner.jsp";
+    	} else {
+    		ownerService.createOwner(owner);
+    		return "redirect:/candy/dashboard";
+    	}
+    	
+    }
+    
     
     
 

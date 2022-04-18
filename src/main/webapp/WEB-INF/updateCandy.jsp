@@ -50,7 +50,8 @@
 
                             <!-- == Show One Candy button == -->
                             <p class="w-100"></p>
-                            <a class="btn btn-success float-end mb-3 me-3" href="/candy/showOneCandy">Show Candy</a>
+                            <a class="btn btn-success float-end mb-3 me-3" href="/candy/showOneCandy/${candy.id}">Show
+                                Candy</a>
                             <p class="w-100"></p>
 
                             <!-- == Update Candy button == -->
@@ -131,6 +132,25 @@
                                                 placeholder="price" />
                                         </p>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <p>
+                                            <form:label path="owner" class="float-start me-2">Owner:</form:label>
+                                            <form:errors path="owner" class="text-danger h5" />
+                                            <form:select path="owner" class="float-start">
+
+                                                <!-- for each owner in owners -->
+                                                <c:forEach items="${allOwners}" var="owner">
+                                                    <form:option value="${owner.id}"
+                                                        label="${owner.firstName} ${owner.lastName}">
+                                                    </form:option> <!-- end of for each -->
+                                                </c:forEach>
+
+                                            </form:select>
+                                        </p>
+                                    </div>
+                                    <br>
+                                    <p class="w-100"></p>
 
 
 

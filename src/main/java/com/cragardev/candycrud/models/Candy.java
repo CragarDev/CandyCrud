@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -46,7 +49,7 @@ public class Candy {
 			private Double price;
 			
 
-			
+			// CreatedAt and UpdatedAt
 			// This will not allow the createdAt column to be updated after creation
 			@Column(updatable = false)
 			@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -56,7 +59,10 @@ public class Candy {
 			@DateTimeFormat(pattern="yyyy-MM-dd")
 			private Date updatedAt;
 			
-			
+			// Relationships connections
+			@ManyToOne(fetch = FetchType.LAZY)
+		    @JoinColumn(name="owner_id")
+		    private Owner owner;
 			
 			// Constructors
 			
@@ -85,16 +91,30 @@ public class Candy {
 
 			// Simple constructor
 
-			public Candy(String name, String brand, Integer rating, Double price) {
+
+			public Candy(String name, String brand, Integer rating, Double price, Owner owner) {
 				super();
 				this.name = name;
 				this.brand = brand;
 				this.rating = rating;
 				this.price = price;
+				this.owner = owner;
 			}
 
 
+			
+			
 			// Getters and Setters
+			
+
+			public Owner getOwner() {
+				return owner;
+			}
+
+
+			public void setOwner(Owner owner) {
+				this.owner = owner;
+			}
 
 
 			public Long getId() {

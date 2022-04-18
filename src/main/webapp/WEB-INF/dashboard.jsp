@@ -32,6 +32,7 @@
                             crossorigin="anonymous"></script>
                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
                         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+                        <link rel="stylesheet" type="text/css" href="/css/style.css">
                     </head>
 
                     <body>
@@ -46,6 +47,11 @@
                             <!-- == Create New Candy button == -->
                             <p class="w-100"></p>
                             <a class="btn btn-warning float-end mb-3 me-3" href="/candy/newCandy">Create Candy</a>
+                            <p class="w-100"></p>
+
+                            <!-- == Create New Owner button == -->
+                            <p class="w-100"></p>
+                            <a class="btn btn-success float-end mb-3 me-3" href="/candy/newOwner">Create Owner</a>
                             <p class="w-100"></p>
 
                             <!-- == Show One Candy button == -->
@@ -76,47 +82,59 @@
                             <p class="w-100"></p>
 
 
+                            <!-- All Candies START -->
 
                             <!-- SCROLLING FROM BOOTSTRAP -->
 
                             <!-- Custom css that makes this example work like it does: -->
-                            <style type="text/css">
+                            <!--   <style type="text/css">
                                 .scrollspy-example {
                                     position: relative;
                                     height: 400px;
                                     margin-top: .5rem;
                                     overflow: auto;
                                 }
-                            </style>
+                            </style> -->
+                            <div>
+                                <h1 class="bg-primary text-success ps-5">Candy</h1>
+                            </div>
+                            <p class="w-100"></p>
                             <nav id="navbar-scrollspy" class="navbar navbar-light bg-light px-1">
                                 <table class="table table-striped p-2 border border-2">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="h4 text-center">Name</th>
-                                            <th scope="col" class="h4 text-center">Brand</th>
-                                            <th scope="col" class="h4 text-center">Rating</th>
-                                            <th scope="col" class="h4 text-center">Price</th>
-                                            <th scope="col" class="h4 text-center">Actions</th>
+                                            <th scope="col" class="h4">Name</th>
+                                            <th scope="col" class="h4">Brand</th>
+                                            <th scope="col" class="h4">Owner</th>
+                                            <th scope="col" class="h4">Rating</th>
+                                            <th scope="col" class="h4">Price</th>
+                                            <th scope="col" class="h4">Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
                             </nav>
-                            <div data-bs-spy="scroll" data-bs-target="#navbar-scrollspy" data-bs-offset="0" tabindex="0"
-                                class="scrollspy-example">
+                            <div data-bs-spy=" scroll" data-bs-target="#navbar-scrollspy" data-bs-offset="0"
+                                tabindex="0" class="scrollspy-example">
                                 <table class="table table-striped p-2 border border-2">
                                     <tbody>
                                         <c:forEach var="candy" items="${candies}">
                                             <tr>
-                                                <td scope="row">
+                                                <td scope="row" class="align-middle">
                                                     <a href="/candy/showOneCandy/${candy.id}">
-                                                        <p class="text-center">
-                                                            <c:out value="${candy.name}"></c:out>
-                                                        </p>
+
+                                                        <c:out value="${candy.name}"></c:out>
+
                                                     </a>
                                                 </td>
                                                 <td scope="row">
                                                     <p class="text-center">
                                                         <c:out value="${candy.brand}"></c:out>
+                                                    </p>
+                                                </td>
+                                                <td scope="row">
+                                                    <p class="text-center">
+                                                        <c:out value="${candy.owner.firstName} ${candy.owner.lastName}">
+                                                        </c:out>
                                                     </p>
                                                 </td>
                                                 <td scope="row">
@@ -128,7 +146,7 @@
                                                 <td scope="row">
                                                     <p class="text-center">
 
-                                                        <fmt:formatNumber value="${candy.price}" type="currency" />
+                                                        <fmt:formatNumber value=" ${candy.price}" type="currency" />
                                                     </p>
                                                 </td>
                                                 <td scope="row">
@@ -147,10 +165,75 @@
                             </div>
                             <!-- end of scrolling table -->
 
+                            <!-- All Candies END -->
 
                             <p class="w-100"></p>
+                            <br>
+                            <br>
+                            <br>
 
-                            <!-- Main Container END -->
+                            <!-- All Owners START -->
+                            <div>
+                                <h1 class="bg-primary text-warning ps-5">Owners</h1>
+                            </div>
+                            <p class="w-100"></p>
+
+
+                            <!-- SCROLLING FROM BOOTSTRAP -->
+
+                            <nav id="navbar-scrollspy" class="navbar navbar-light bg-light px-1">
+                                <table class="table table-striped p-2 border border-2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="h4 align-middle"">First Name</th>
+                                            <th scope=" col" class="h4 align-middle"">Last Name</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </nav>
+                            <div data-bs-spy=" scroll" data-bs-target="#navbar-scrollspy" data-bs-offset="0"
+                                                tabindex="0" class="scrollspy-example">
+                                                <table class="table table-striped p-2 border border-2">
+                                                    <tbody>
+                                                        <c:forEach var="owner" items="${owners}">
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <a href="/candy/showOneOwner/${owner.id}">
+
+                                                                        <c:out value="${owner.firstName}"></c:out>
+
+                                                                    </a>
+                                                                </td>
+                                                                <td scope="row">
+                                                                    <p class="text-center">
+                                                                        <c:out value="${owner.lastName}"></c:out>
+                                                                    </p>
+                                                                </td>
+                                                                <!-- 
+                                                <td scope="row">
+                                                    <p class="text-center">
+                                                        <a href="/candy/showOneOwner/${owner.id}">view</a>
+                                                        <span> | </span>
+                                                        <a href="/candy/updateOwner/${owner.id}">edit</a>
+                                                        <span> | </span>
+                                                        <a href="/candy/deleteOwner/${owner.id}">delete</a>
+                                                    </p>
+                                                </td> -->
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                        </div>
+                        <!-- end of scrolling table -->
+
+
+
+                        <!-- All Owners END -->
+
+
+                        <p class="w-100"></p>
+
+                        <!-- Main Container END -->
                         </div>
 
                     </body>
