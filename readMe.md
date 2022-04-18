@@ -1,5 +1,12 @@
 # Candy CRUD - follow along
 
+# Login and Registration added
+
+![screenShot10](./src/main/resources/static//images/myScreenShot10.png)
+![screenShot11](./src/main/resources/static//images/myScreenShot11.png)
+![screenShot12](./src/main/resources/static//images/myScreenShot12.png)
+![screenShot13](./src/main/resources/static//images/myScreenShot13.png)
+![screenShot14](./src/main/resources/static//images/myScreenShot14.png)
 ![screenShot5](./src/main/resources/static//images/myScreenShot5.png)
 ![screenShot6](./src/main/resources/static//images/myScreenShot6.png)
 ![screenShot7](./src/main/resources/static//images/myScreenShot7.png)
