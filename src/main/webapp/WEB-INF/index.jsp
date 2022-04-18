@@ -70,7 +70,7 @@
                             <div>
                                 <h1 class="bg-primary text-light ps-5">Welcome to Candy CRUD</h1>
                             </div>
-                            <div><a class="btn btn-info mt-4" href="/candy/dashboard">Start Looking!</a></div>
+                            <div><a class="btn btn-info mt-4" href="/candy/login">Start Sweeting!</a></div>
                             <p class="w-100"></p>
                             <p class="w-100"></p>
                             <!-- == Dashboard button == -->

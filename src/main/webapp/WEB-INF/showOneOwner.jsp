@@ -44,6 +44,11 @@
                             <a class="btn btn-danger float-end mb-3 me-3" href="/candy/delete/${candy.id}">Delete</a>
                             <p class="w-100"></p> -->
 
+                            <!-- == Candy Logout button == -->
+                            <p class="w-100"></p>
+                            <a class="btn btn-danger float-end mb-3 me-3" href="/candy/logout">Logout</a>
+                            <p class="w-100"></p>
+
                             <!-- == Create New Candy button == -->
                             <p class="w-100"></p>
                             <a class="btn btn-warning float-end mb-3 me-3" href="/candy/newCandy">Create Candy</a>
@@ -114,7 +119,7 @@
                                             <tr>
                                                 <th scope="col" class="h4 text-center">Name</th>
                                                 <th scope="col" class="h4 text-center">Brand</th>
-                                        
+
                                                 <th scope="col" class="h4 text-center">Rating</th>
                                                 <th scope="col" class="h4 text-center">Price</th>
                                                 <th scope="col" class="h4 text-center">Actions</th>

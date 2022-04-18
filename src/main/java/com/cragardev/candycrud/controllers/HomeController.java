@@ -2,6 +2,7 @@ package com.cragardev.candycrud.controllers;
 
 
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -13,11 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cragardev.candycrud.models.Candy;
+import com.cragardev.candycrud.models.LoginUser;
 import com.cragardev.candycrud.models.Owner;
+import com.cragardev.candycrud.models.User;
 import com.cragardev.candycrud.services.CandyService;
 import com.cragardev.candycrud.services.OwnerService;
+import com.cragardev.candycrud.services.UserService;
 
 @Controller
 public class HomeController {
@@ -26,13 +31,16 @@ public class HomeController {
 	// Inject the Service
 	private final CandyService candyService;
 	private final OwnerService ownerService;
+	private final UserService userService;
+	
 	
 	
 
-	 public HomeController(CandyService candyService, OwnerService ownerService) {
+	 public HomeController(CandyService candyService, OwnerService ownerService, UserService userService) {
 		super();
 		this.candyService = candyService;
 		this.ownerService = ownerService;
+		this.userService = userService;
 	}
 
 	 
@@ -54,12 +62,104 @@ public class HomeController {
         return "index.jsp";
     }
 
+    
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  LOGIN REGISTRATION  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    
+    @GetMapping("/candy/login")
+    public String login(Model model) {
+    
+        // Bind empty User and LoginUser objects to the JSP
+        // to capture the form input
+        model.addAttribute("newUser", new User());
+        model.addAttribute("newLogin", new LoginUser());
+        return "login.jsp";
+    }
+    
+    @PostMapping("/candy/login")
+    public String loginProcess(
+    		@Valid 
+    		@ModelAttribute("newLogin") LoginUser newLogin, 
+            BindingResult result, 
+            Model model, 
+            HttpSession session) {
+        
+        // Add once service is implemented:
+        // User user = userServ.login(newLogin, result);
+    	User user = userService.login(newLogin, result);
+    	
+        if(result.hasErrors()) {
+            model.addAttribute("newUser", new User());
+            return "login.jsp";
+        }
+    
+        // No errors! 
+        // TO-DO Later: Store their ID from the DB in session, 
+        // in other words, log them in.
+        session.setAttribute("user_id", user.getId());
+
+        
+    
+        return "redirect:/candy/dashboard";
+    }
+    
+    @PostMapping("/candy/register")
+    public String registerProcess(
+    		@Valid 
+    		@ModelAttribute("newUser") User newUser, 
+    		BindingResult result, 
+    		Model model, 
+    		HttpSession session) {
+    	
+    	// TO-DO Later -- call a register method in the service 
+    	// to do some extra validations and create a new user!
+    	userService.register(newUser, result);
+    	
+    	
+    	if(result.hasErrors()) {
+    		// Be sure to send in the empty LoginUser before 
+    		// re-rendering the page.
+    		model.addAttribute("newLogin", new LoginUser());
+    		return "login.jsp";
+    	}
+    	
+    	// No errors! 
+    	// TO-DO Later: Store their ID from the DB in session, 
+    	// in other words, log them in.
+    	
+    	session.setAttribute("user_id", newUser.getId());
+    	
+    	return "redirect:/candy/dashboard";
+    }
+    
+    // Log out user
+    @GetMapping("/candy/logout")
+    public String logout(HttpSession session) {
+    	session.invalidate();
+    	return "redirect:/candy/login";
+    	
+    }
+    
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
     //
     // ========= Candy Dashboard page ===========
     // To show all candies and all owners
     //
     @GetMapping("/candy/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+    	
+    	// check to see if user is logged in
+    	
+    	if (session.getAttribute("user_id") == null) {
+			// if not in session, redirect to login
+    		return "redirect:/createError";
+			}
+			
+    	// Get users info to show them logged in
+    	Long userId = (Long) session.getAttribute("user_id");
+    	model.addAttribute("user", userService.findUser(userId));
+    	
+    	
     	
     	// Send all our candies to the JSP using Model model
     	model.addAttribute("candies", candyService.allCandys());
@@ -75,7 +175,14 @@ public class HomeController {
     //
     @GetMapping("/candy/showOneCandy/{id}") // add an Id
     public String showOneCandy(Model model,
-    		@PathVariable(value="id") Long id) {
+    		@PathVariable(value="id") Long id, HttpSession session) {
+    	
+    	// check to see if user is logged in
+    	
+    	if (session.getAttribute("user_id") == null) {
+			// if not in session, redirect to login
+    		return "redirect:/createError";
+			}
     	
     	Candy candy = candyService.findCandy(id);
     	model.addAttribute("candy", candy);
@@ -88,7 +195,14 @@ public class HomeController {
     //
     @GetMapping("/candy/showOneOwner/{id}") // add an Id
     public String showOneOwner(Model model,
-    		@PathVariable(value="id") Long id) {
+    		@PathVariable(value="id") Long id, HttpSession session) {
+    	
+    	// check to see if user is logged in
+    	
+    	if (session.getAttribute("user_id") == null) {
+			// if not in session, redirect to login
+    		return "redirect:/createError";
+			}
     	
     	Owner owner = ownerService.findOwner(id);
     	model.addAttribute("owner", owner);
@@ -103,7 +217,15 @@ public class HomeController {
     @GetMapping("/candy/newCandy")
     public String newCandy(
     		@ModelAttribute("candy") Candy candy,
-    		Model model) {
+    		Model model, 
+    		HttpSession session) {
+    	
+    	// check to see if user is logged in
+    	
+    	if (session.getAttribute("user_id") == null) {
+			// if not in session, redirect to login
+    		return "redirect:/createError";
+			}
     	
     	model.addAttribute("allOwners", ownerService.allOwners());
     	
@@ -133,12 +255,19 @@ public class HomeController {
     // ---------------------------------------- UPDATE CANDY-----------
 
     //
-    // ========= Update HomeController page ===========
+    // ========= Update Candy page ===========
     //
     @GetMapping("/candy/updateCandy/{id}") // add an Id
     public String updateCandy(@PathVariable("id") Long id,
     		@ModelAttribute("candy") Candy candy,
-    		Model model) {
+    		Model model, HttpSession session) {
+    	
+    	// check to see if user is logged in
+    	
+    	if (session.getAttribute("user_id") == null) {
+			// if not in session, redirect to login
+    		return "redirect:/createError";
+			}
     	model.addAttribute("allOwners", ownerService.allOwners());
     	model.addAttribute("candy", candyService.findCandy(id));
     	
@@ -173,7 +302,15 @@ public class HomeController {
     //
     @GetMapping("/candy/newOwner")
     public String newOwner(
-    		@ModelAttribute("owner") Owner owner) {
+    		@ModelAttribute("owner") Owner owner,
+    		HttpSession session) {
+    	
+    	// check to see if user is logged in
+    	
+    	if (session.getAttribute("user_id") == null) {
+			// if not in session, redirect to login
+    		return "redirect:/createError";
+			}
     	
     	
         return "newOwner.jsp";
@@ -199,6 +336,14 @@ public class HomeController {
     	
     }
     
+    //
+    //================== ERRORS ==========================
+    //
+    @RequestMapping("/createError")
+    public String flashMessages(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", "Please log in or Register!");
+        return "redirect:/candy/login";
+    }
     
     
 

@@ -58,6 +58,11 @@
                             <a class="btn btn-success float-end mb-3 me-3" href="/candy/updateCandy">Update Candy</a>
                             <p class="w-100"></p> -->
 
+                            <!-- == Candy Logout button == -->
+                            <p class="w-100"></p>
+                            <a class="btn btn-danger float-end mb-3 me-3" href="/candy/logout">Logout</a>
+                            <p class="w-100"></p>
+
                             <!-- == Candy Dashboard button == -->
                             <p class="w-100"></p>
                             <a class="btn btn-primary float-end mb-3 me-3" href="/candy/dashboard">Dashboard</a>

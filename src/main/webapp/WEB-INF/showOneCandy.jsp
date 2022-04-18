@@ -38,6 +38,11 @@
                         <!-- Buttons START -->
                         <div class="container w-75">
 
+                            <!-- == Candy Logout button == -->
+                            <p class="w-100"></p>
+                            <a class="btn btn-danger float-end mb-3 me-3" href="/candy/logout">Logout</a>
+                            <p class="w-100"></p>
+
                             <!-- == Delete Candy button == -->
                             <p class="w-100"></p>
                             <a class="btn btn-danger float-end mb-3 me-3" href="/candy/delete/${candy.id}">Delete</a>

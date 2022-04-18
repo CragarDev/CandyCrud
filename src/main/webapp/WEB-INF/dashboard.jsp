@@ -44,6 +44,11 @@
                             <a class="btn btn-danger float-end mb-3 me-3" href="/candy/delete/${candy.id}">Delete</a>
                             <p class="w-100"></p> -->
 
+                            <!-- == Candy Logout button == -->
+                            <p class="w-100"></p>
+                            <a class="btn btn-danger float-end mb-3 me-3" href="/candy/logout">Logout</a>
+                            <p class="w-100"></p>
+
                             <!-- == Create New Candy button == -->
                             <p class="w-100"></p>
                             <a class="btn btn-warning float-end mb-3 me-3" href="/candy/newCandy">Create Candy</a>
@@ -64,10 +69,7 @@
                             <a class="btn btn-success float-end mb-3 me-3" href="/candy/updateCandy">Update Candy</a>
                             <p class="w-100"></p> -->
 
-                            <!-- == Candy Dashboard button == -->
-                            <!-- <p class="w-100"></p>
-                            <a class="btn btn-primary float-end mb-3 me-3" href="/candy/dashboard">Dashboard</a>
-                            <p class="w-100"></p> -->
+
 
                         </div>
                         <!-- Buttons END -->
@@ -76,7 +78,9 @@
                         <div class="container text-center mt-5">
 
                             <div>
-                                <h1 class="bg-primary text-light ps-5">Welcome to the Candy CRUD Dashboard</h1>
+                                <h1 class="bg-primary text-light ps-5">Welcome <span
+                                        class="text-primary ">${user.userName}</span>, to the Candy CRUD
+                                    Dashboard</h1>
                             </div>
 
                             <p class="w-100"></p>
@@ -185,31 +189,31 @@
                                 <table class="table table-striped p-2 border border-2">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="h4 align-middle"">First Name</th>
-                                            <th scope=" col" class="h4 align-middle"">Last Name</th>
+                                            <th scope="col" class="h4 align-middle">First Name</th>
+                                            <th scope=" col" class="h4 align-middle">Last Name</th>
                                         </tr>
                                     </thead>
                                 </table>
                             </nav>
                             <div data-bs-spy=" scroll" data-bs-target="#navbar-scrollspy" data-bs-offset="0"
-                                                tabindex="0" class="scrollspy-example">
-                                                <table class="table table-striped p-2 border border-2">
-                                                    <tbody>
-                                                        <c:forEach var="owner" items="${owners}">
-                                                            <tr>
-                                                                <td scope="row">
-                                                                    <a href="/candy/showOneOwner/${owner.id}">
+                                tabindex="0" class="scrollspy-example">
+                                <table class="table table-striped p-2 border border-2">
+                                    <tbody>
+                                        <c:forEach var="owner" items="${owners}">
+                                            <tr>
+                                                <td scope="row">
+                                                    <a href="/candy/showOneOwner/${owner.id}">
 
-                                                                        <c:out value="${owner.firstName}"></c:out>
+                                                        <c:out value="${owner.firstName}"></c:out>
 
-                                                                    </a>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <p class="text-center">
-                                                                        <c:out value="${owner.lastName}"></c:out>
-                                                                    </p>
-                                                                </td>
-                                                                <!-- 
+                                                    </a>
+                                                </td>
+                                                <td scope="row">
+                                                    <p class="text-center">
+                                                        <c:out value="${owner.lastName}"></c:out>
+                                                    </p>
+                                                </td>
+                                                <!-- 
                                                 <td scope="row">
                                                     <p class="text-center">
                                                         <a href="/candy/showOneOwner/${owner.id}">view</a>
@@ -219,21 +223,21 @@
                                                         <a href="/candy/deleteOwner/${owner.id}">delete</a>
                                                     </p>
                                                 </td> -->
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                        </div>
-                        <!-- end of scrolling table -->
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end of scrolling table -->
 
 
 
-                        <!-- All Owners END -->
+                            <!-- All Owners END -->
 
 
-                        <p class="w-100"></p>
+                            <p class="w-100"></p>
 
-                        <!-- Main Container END -->
+                            <!-- Main Container END -->
                         </div>
 
                     </body>
